@@ -1,12 +1,15 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(__dirname)); // чтобы отдавать статические файлы (например, gps.js)
+// Статические файлы (HTML, JS)
+app.use(express.static(__dirname));
 
+// Обработка GET-запроса на корень
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/send-location', async (req, res) => {
