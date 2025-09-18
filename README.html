@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>📍 Отправка геопозиции на почту</title>
+</head>
+<body style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+  <h2>📍 Отправить геопозицию на почту</h2>
+  <button onclick="getLocation()" style="padding:10px 20px; font-size:16px;">Отправить</button>
+  <p id="out"></p>
+
+  <script>
+    const EMAIL = "ddtp896@gmail.com"; // <-- твоя почта
+
+    function getLocation() {
+      const out = document.getElementById("out");
+      if (!navigator.geolocation) {
+        out.innerText = "❌ Ваш браузер не поддерживает геолокацию";
+        return;
+      }
+
+      out.innerText = "⏳ Определяем координаты...";
+
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const { latitude, longitude, accuracy } = pos.coords;
+          const link = `https://maps.google.com/?q=${latitude},${longitude}`;
+          const subject = encodeURIComponent("📍 Моя геопозиция");
+          const body = encodeURIComponent(
+            `Координаты:\nШирота: ${latitude}\nДолгота: ${longitude}\nТочность: ±${accuracy} м\n\nКарта: ${link}`
+          );
+
+          const mailtoLink = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+
+          out.innerHTML = `<a href="${mailtoLink}" 
+            style="display:inline-block;margin-top:15px;padding:10px 15px;background:#0072c6;color:white;
+            text-decoration:none;border-radius:5px;">📨 Отправить письмо</a>`;
+        },
+        err => {
+          out.innerText = "❌ Ошибка: " + err.message;
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+  </script>
+</body>
+</html>
