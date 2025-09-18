@@ -4,11 +4,9 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
-
-// Обслуживаем статические файлы из корня проекта
 app.use(express.static(__dirname));
 
-// Главная страница — index.html из корня
+// ОТДАЁМ index.html из КОРНЯ!
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
