@@ -1,21 +1,17 @@
 function sendLocation() {
-  // Проверяем, поддерживается ли геолокация
   if (!navigator.geolocation) {
     alert("Ваш браузер не поддерживает геолокацию.");
     return;
   }
 
-  // Получаем координаты
   navigator.geolocation.getCurrentPosition(function(position) {
-    // Формируем данные для отправки
     const data = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
       accuracy: position.coords.accuracy
     };
 
-    // Отправляем POST-запрос на сервер
-    fetch('https://dima-github-com1.onrender.com/send-location', {
+    fetch('/send-location', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
