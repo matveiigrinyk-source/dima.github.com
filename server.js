@@ -4,11 +4,8 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
-
-// Обслуживание статических файлов из папки src
 app.use(express.static(path.join(__dirname, 'src')));
 
-// Обработка корневого запроса — отдаём src/index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
